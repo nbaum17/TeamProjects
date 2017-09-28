@@ -1,5 +1,3 @@
 # TeamProjects
 
 FIRST!!!
-
-SECOND!
