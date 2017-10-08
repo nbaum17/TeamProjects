@@ -24,9 +24,9 @@ public class VideoClientGuiContainer {
 		guiContainer = new JFrame();
 		guiContainer.setFont(new Font("Dialog", Font.BOLD, 14));
 		guiContainer.setTitle("UAS Operator Recording Tool");
-		guiContainer.setBounds(100, 100, 450, 300);
+		guiContainer.setBounds(100, 100, 455, 319);
 		guiContainer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		guiContainer.add(new VideoClientGui());
+		guiContainer.getContentPane().add(new VideoClientGui());
 	}
 
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,6 +19,7 @@ import javax.swing.border.LineBorder;
 
 import com.control.video.StartVideo;
 import com.control.video.StopVideo;
+import com.model.sendVideo.VideoData;
 
 @SuppressWarnings("serial")
 public class VideoClientGui extends JPanel{
@@ -28,6 +30,7 @@ public class VideoClientGui extends JPanel{
 	private JSeparator separator;
 	private JButton btnStartRecording;
 	private JButton btnStopRecording;
+	private VideoData videoData; 
 	
 	/**
 	 * Create the panel.
@@ -118,14 +121,17 @@ public class VideoClientGui extends JPanel{
 		});
 		
 		btnStartRecording.addActionListener(e -> {
+			videoData = new VideoData();
 			StartVideo startVideo = new StartVideo();
 			startVideo.execute();
+			videoData.setDate(startVideo.getDate());
 		});
 		
 		
 		btnStopRecording.addActionListener(e -> {
 			StopVideo stopVideo = new StopVideo();
 			stopVideo.execute();
+			System.out.println(videoData.getDate());
 		});
 	}
 }

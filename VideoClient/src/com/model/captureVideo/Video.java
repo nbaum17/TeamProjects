@@ -3,6 +3,7 @@ package com.model.captureVideo;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +13,7 @@ import org.jcodec.api.awt.AWTSequenceEncoder;
 public class Video {
 	private AWTSequenceEncoder enc = null;
 	private static Video video = null;
-	
+	private Date date;
 	
 	/**
      * constructor for video object.
@@ -20,8 +21,9 @@ public class Video {
      * @param frame
      */
     private Video() {
+    	date = new Date();
       try {
-            enc = AWTSequenceEncoder.create30Fps(new File("./video/filename.mp4"));
+            enc = AWTSequenceEncoder.create25Fps(new File("./video/"+ date +".mp4"));
             //enc = AWTSequenceEncoder.create2997Fps(new File("./video/filename.mp4"));
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
@@ -38,8 +40,12 @@ public class Video {
         }
         return video;
     }
-    
-    /**
+
+	public Date getDate() {
+		return date;
+	}
+
+	/**
      * creates the video
      */
     public void mkVideo(BufferedImage image) {
@@ -56,7 +62,7 @@ public class Video {
     public void stop() {
     	try {
             enc.finish();
-            //enc = AWTSequenceEncoder.create30Fps(new File("./video/filename.mp4"));
+            video = null;     
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,6 +1,7 @@
 package com.model.captureVideo;
 
 import java.awt.image.BufferedImage;
+import java.util.Date;
 
 import com.model.webCam.Camera;
 
@@ -9,10 +10,12 @@ public class CompileVideo implements Runnable{
 	private Video video;
 	private Camera camera;
 	private boolean recording = false;
+	private Date date;
 	
 	private CompileVideo() {
 		video = Video.getInstance();
 		camera = Camera.getInstance();
+		date = video.getDate();
 	}
 	
 	/**
@@ -26,6 +29,12 @@ public class CompileVideo implements Runnable{
         return compVid;
     }
 
+    
+    
+	public Date getDate() {
+		return date;
+	}
+
 	public void setRecording(boolean recording) {
 		this.recording = recording;
 	}
@@ -35,14 +44,15 @@ public class CompileVideo implements Runnable{
 		while(recording) {
 			BufferedImage image = camera.capture();
 			video.mkVideo(image);
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(1);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 		video.stop();
 		camera.cameraOff();
+		compVid = null;
 	}
 
 	

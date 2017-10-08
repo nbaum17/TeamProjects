@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamResolution;
 
 public class Camera {
 	private Webcam webcam;
@@ -44,6 +45,7 @@ public class Camera {
      */
     public void cameraOff() {
     	webcam.close();
+    	camera = null;
     }
     
     /**
