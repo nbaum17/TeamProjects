@@ -3,13 +3,13 @@ package com.util;
 import java.net.*;
 import java.io.*;
 
-public class Socket {
+public class ServerSocket {
 
 	private Socket socket;
 	private BufferedReader input;
 	private PrintWriter output;
 	
-	public Socket(String hostName, int port) {
+	public ServerSocket(String hostName, int port) {
 		try{
 			socket = new Socket(hostName,port);		
 			output = new PrintWriter(socket.getOutputStream(),true);
