@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
+import com.control.video.SendVideo;
 import com.control.video.StartVideo;
 import com.control.video.StopVideo;
 import com.model.sendVideo.VideoData;
@@ -117,7 +118,8 @@ public class VideoClientGui extends JPanel{
 		setLayout(groupLayout);
 		
 		btnSendVideo.addActionListener(e -> {
-			
+			SendVideo send = new SendVideo();
+			send.execute();
 		});
 		
 		btnStartRecording.addActionListener(e -> {
