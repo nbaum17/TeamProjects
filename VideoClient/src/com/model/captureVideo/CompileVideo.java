@@ -10,7 +10,7 @@ public class CompileVideo implements Runnable{
 	private Video video;
 	private Camera camera;
 	private boolean recording = false;
-	private Date date;
+	private Long date;
 	
 	private CompileVideo() {
 		video = Video.getInstance();
@@ -31,7 +31,7 @@ public class CompileVideo implements Runnable{
 
     
     
-	public Date getDate() {
+	public Long getDate() {
 		return date;
 	}
 

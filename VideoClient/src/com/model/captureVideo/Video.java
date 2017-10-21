@@ -13,7 +13,7 @@ import org.jcodec.api.awt.AWTSequenceEncoder;
 public class Video {
 	private AWTSequenceEncoder enc = null;
 	private static Video video = null;
-	private Date date;
+	private Long date;
 	
 	/**
      * constructor for video object.
@@ -21,7 +21,7 @@ public class Video {
      * @param frame
      */
     private Video() {
-    	date = new Date();
+    	date = new Date().getTime();
       try {
             enc = AWTSequenceEncoder.create25Fps(new File("./video/"+ date +".mp4"));
             //enc = AWTSequenceEncoder.create2997Fps(new File("./video/filename.mp4"));
@@ -41,7 +41,7 @@ public class Video {
         return video;
     }
 
-	public Date getDate() {
+	public Long getDate() {
 		return date;
 	}
 

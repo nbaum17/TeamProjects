@@ -10,6 +10,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
@@ -37,6 +38,7 @@ public class VideoClientGui extends JPanel{
 	 * Create the panel.
 	 */
 	public VideoClientGui() {
+		
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		JLabel lblTitle = new JLabel("Video Title");
@@ -51,7 +53,7 @@ public class VideoClientGui extends JPanel{
 		sport = new JTextField();
 		sport.setColumns(10);	
 		teamName = new JTextField();
-		teamName.setColumns(10);		
+		teamName.setColumns(10);	
 		videoTitle = new JTextField();
 		videoTitle.setColumns(10);
 		
@@ -59,12 +61,14 @@ public class VideoClientGui extends JPanel{
 		
 		btnSendVideo = new JButton("Send Video");
 		btnSendVideo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSendVideo.setEnabled(false);
 		
 		btnStartRecording = new JButton("Start Recording");
 		btnStartRecording.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		btnStopRecording = new JButton("Stop Recording");
 		btnStopRecording.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnStopRecording.setEnabled(false);
 		
 		JProgressBar progressBar = new JProgressBar();
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -117,23 +121,61 @@ public class VideoClientGui extends JPanel{
 		);
 		setLayout(groupLayout);
 		
+		/**
+		 * listens to the send button and either sends the video or doesn't depending on the 
+		 * input in the text fields.
+		 */
 		btnSendVideo.addActionListener(e -> {
-			SendVideo send = new SendVideo(videoData);
-			send.execute();
+			sport.setBackground(Color.WHITE);
+			teamName.setBackground(Color.WHITE);
+			videoTitle.setBackground(Color.WHITE);
+			if(sport.getText().trim().length() == 0 || teamName.getText().trim().length() == 0 || videoTitle.getText().trim().length() == 0) {
+				StringBuilder errorMessage = new StringBuilder();
+				errorMessage.append("Unable to send video due to missing information! ");
+				if(sport.getText().trim().length() == 0) {
+					sport.setBackground(Color.RED);
+				}
+				if(teamName.getText().trim().length() == 0) {
+					teamName.setBackground(Color.RED);
+				}
+				if(videoTitle.getText().trim().length() == 0) {
+					videoTitle.setBackground(Color.RED);
+				}
+				JOptionPane.showMessageDialog(this,
+					    errorMessage,
+					    "Missing Input",
+					    JOptionPane.ERROR_MESSAGE);
+			}else {
+				videoData.setSport(sport.getText());
+				videoData.setTeamName(teamName.getText());
+				videoData.setTile(videoTitle.getText());
+				SendVideo send = new SendVideo(videoData);
+				send.execute();
+			}
 		});
 		
+		/**
+		 * listens to the start recording button and starts recording if a recording has not already started. 
+		 */
 		btnStartRecording.addActionListener(e -> {
 			videoData = new VideoData();
 			StartVideo startVideo = new StartVideo();
 			startVideo.execute();
 			videoData.setDate(startVideo.getDate());
+			btnStopRecording.setEnabled(true);
+			btnStartRecording.setEnabled(false);
+			btnSendVideo.setEnabled(false);
 		});
 		
-		
+		/**
+		 * listens to the stop recording button and stops the recording if one is in progress. 
+		 */
 		btnStopRecording.addActionListener(e -> {
 			StopVideo stopVideo = new StopVideo();
 			stopVideo.execute();
-			System.out.println(videoData.getDate());
+			btnStopRecording.setEnabled(false);
+			btnStartRecording.setEnabled(true);
+			btnSendVideo.setEnabled(true);
 		});
 	}
 }

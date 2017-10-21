@@ -3,7 +3,7 @@ package com.model.sendVideo;
 import java.util.Date;
 
 public class VideoData {	
-	private Date date; 
+	private Long date; 
 	private String sport;
 	private String teamName;
 	private String tile; 
@@ -12,11 +12,11 @@ public class VideoData {
 		
 	}
 
-	public Date getDate() {
+	public Long getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Long date) {
 		this.date = date;
 	}
 

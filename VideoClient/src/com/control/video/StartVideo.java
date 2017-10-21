@@ -22,7 +22,7 @@ public class StartVideo implements Ctrl{
 		thread.start();
 	}
 	
-	public Date getDate() {
+	public Long getDate() {
 		return cv.getDate();
 	}
 

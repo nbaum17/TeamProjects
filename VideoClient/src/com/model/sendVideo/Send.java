@@ -33,7 +33,6 @@ public class Send {
 			videoDataString.append(videoData.getSport()+"; ");
 			byte [] stringBytes = videoDataString.toString().getBytes();
 			
-			
 			// create stream for video sending. 
 			File file = new File ("./video/" + videoData.getDate() + ".mp4");
 			byte [] byteArray  = new byte [(int)file.length()];
@@ -50,7 +49,6 @@ public class Send {
 			if (bufferedInputStream != null) bufferedInputStream.close();
 			if (outputStream != null) bufferedInputStream.close();
 			if (socket!=null) socket.close();
-			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
