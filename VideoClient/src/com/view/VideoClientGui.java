@@ -118,7 +118,7 @@ public class VideoClientGui extends JPanel{
 		setLayout(groupLayout);
 		
 		btnSendVideo.addActionListener(e -> {
-			SendVideo send = new SendVideo();
+			SendVideo send = new SendVideo(videoData);
 			send.execute();
 		});
 		

@@ -44,6 +44,8 @@ public class CompileVideo implements Runnable{
 		while(recording) {
 			BufferedImage image = camera.capture();
 			video.mkVideo(image);
+			
+			// This may be needed to controll the frame rate. 
 //			try {
 //				Thread.sleep(1);
 //			} catch (InterruptedException e) {
