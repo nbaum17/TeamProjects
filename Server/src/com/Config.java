@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import com.services.VideoService;
+
 @ApplicationPath("/rest")
 public class Config extends Application{
 	
@@ -21,7 +23,7 @@ public class Config extends Application{
     public Set<Class<?>> getClasses() {
 		final Set<Class<?>> classes = new HashSet<>();
 	    // register root resource
-	    //classes.add(this.class);
+	    classes.add(VideoService.class);
         return classes;
     }
 
