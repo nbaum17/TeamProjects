@@ -7,6 +7,8 @@ public class Video{
 	private String sport;
 	private String team;
 	private Long date;
+	private String path;
+	
 	public int getId() {
 		return id;
 	}
@@ -37,4 +39,11 @@ public class Video{
 	public void setDate(Long date) {
 		this.date = date;
 	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
 }
