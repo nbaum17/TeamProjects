@@ -25,8 +25,12 @@ public class Send {
 	private void sendData() {
 		try {
 			socket = new Socket(HOST,PORT);
+			File file = new File ("./video/" + videoData.getDate() + ".mp4");
+			byte [] byteArray  = new byte [(int)file.length()];
+			
 			// create video data string.
 			StringBuilder videoDataString = new StringBuilder();
+			videoDataString.append((int)file.length()+ "; ");
 			videoDataString.append(videoData.getDate()+"; ");
 			videoDataString.append(videoData.getTeamName()+"; ");
 			videoDataString.append(videoData.getTile()+"; ");
@@ -34,8 +38,6 @@ public class Send {
 			byte [] stringBytes = videoDataString.toString().getBytes();
 			
 			// create stream for video sending. 
-			File file = new File ("./video/" + videoData.getDate() + ".mp4");
-			byte [] byteArray  = new byte [(int)file.length()];
 			fileInputStream = new FileInputStream(file);
 			bufferedInputStream = new BufferedInputStream(fileInputStream);
 			bufferedInputStream.read(byteArray,0,byteArray.length);

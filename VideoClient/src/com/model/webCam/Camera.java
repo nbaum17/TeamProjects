@@ -15,8 +15,8 @@ public class Camera {
      */
     private Camera(){
         webcam = Webcam.getDefault();
-        webcam.setViewSize(new Dimension(320,240));
-        //webcam.setViewSize(WebcamResolution.VGA.getSize());
+        //webcam.setViewSize(new Dimension(320,240));
+        webcam.setViewSize(WebcamResolution.VGA.getSize());
         cameraOn();
     }
 	
