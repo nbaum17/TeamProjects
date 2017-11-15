@@ -1,9 +1,10 @@
 package com.model.webCam;
 
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamDevice;
 import com.github.sarxos.webcam.WebcamResolution;
 
 public class Camera {
@@ -14,7 +15,13 @@ public class Camera {
      * constructor for webcam object.
      */
     private Camera(){
-        webcam = Webcam.getDefault();
+        List<Webcam> wc = Webcam.getWebcams();
+        for(Webcam w : wc) {
+        	WebcamDevice d = w.getDevice();
+        	if(d.getName().equals("USB 2861 Device 1")) {
+        		webcam = w;
+        	}
+        }
         //webcam.setViewSize(new Dimension(320,240));
         webcam.setViewSize(WebcamResolution.VGA.getSize());
         cameraOn();

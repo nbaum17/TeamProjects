@@ -27,7 +27,7 @@ public class VideoDAO {
 	 */
 	public ArrayList<Video> getAll(Connection con) throws SQLException {
 		statement = con.createStatement();
-		resultSet = statement.executeQuery("select * from video_data");
+		resultSet = statement.executeQuery("select * from video_table");
 		ArrayList<Video> videoList = resultSetToArrayList(resultSet);
 		return videoList;
 	}
@@ -47,7 +47,7 @@ public class VideoDAO {
 		Video video;
 		while (rst.next()) {
 			video = new Video();
-			video.setDate(resultSet.getDate("date").getTime());
+			video.setDate(resultSet.getLong("date"));
 			video.setId(resultSet.getInt("id"));
 			video.setSport(resultSet.getString("sport"));
 			video.setTeam(resultSet.getString("team"));
