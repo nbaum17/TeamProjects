@@ -1,5 +1,6 @@
 package com.model.webCam;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -18,12 +19,15 @@ public class Camera {
         List<Webcam> wc = Webcam.getWebcams();
         for(Webcam w : wc) {
         	WebcamDevice d = w.getDevice();
+        	//System.out.print(d.getName());
         	if(d.getName().equals("USB 2861 Device 1")) {
         		webcam = w;
+        	}else {
+        		webcam = Webcam.getDefault();
         	}
         }
-        //webcam.setViewSize(new Dimension(320,240));
-        webcam.setViewSize(WebcamResolution.VGA.getSize());
+        webcam.setViewSize(new Dimension(320,240));
+        //webcam.setViewSize(WebcamResolution.VGA.getSize());
         cameraOn();
     }
 	

@@ -24,7 +24,6 @@ public class Video {
     	date = new Date().getTime();
       try {
             enc = AWTSequenceEncoder.create25Fps(new File("./video/"+ date +".mp4"));
-            //enc = AWTSequenceEncoder.create2997Fps(new File("./video/filename.mp4"));
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
         }

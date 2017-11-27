@@ -2,10 +2,12 @@ package com.control.video;
 
 import com.control.Ctrl;
 import com.model.sendVideo.Send;
+import com.model.sendVideo.SendOverHttp;
 import com.model.sendVideo.VideoData;
 
 public class SendVideo implements Ctrl{
 	private Send send;
+	private SendOverHttp s;
 	private VideoData vd;
 	
 	public SendVideo(VideoData videoData) {
@@ -14,7 +16,8 @@ public class SendVideo implements Ctrl{
 	
 	@Override
 	public void execute() {
-		send = new Send(vd);
+		//send = new Send(vd);
+		s = new SendOverHttp(vd);
 	}
 
 }

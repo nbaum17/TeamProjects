@@ -30,11 +30,11 @@ public class Send {
 			
 			// create video data string.
 			StringBuilder videoDataString = new StringBuilder();
-			videoDataString.append((int)file.length()+ "; ");
-			videoDataString.append(videoData.getDate()+"; ");
-			videoDataString.append(videoData.getTeamName()+"; ");
-			videoDataString.append(videoData.getTile()+"; ");
-			videoDataString.append(videoData.getSport()+"; ");
+			videoDataString.append((int)file.length()+ ";");
+			videoDataString.append(videoData.getDate()+";");
+			videoDataString.append(videoData.getTeamName()+";");
+			videoDataString.append(videoData.getTile()+";");
+			videoDataString.append(videoData.getSport()+";");
 			byte [] stringBytes = videoDataString.toString().getBytes();
 			
 			// create stream for video sending. 

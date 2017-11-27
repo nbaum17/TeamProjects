@@ -29,8 +29,6 @@ public class CompileVideo implements Runnable{
         return compVid;
     }
 
-    
-    
 	public Long getDate() {
 		return date;
 	}
@@ -44,13 +42,12 @@ public class CompileVideo implements Runnable{
 		while(recording) {
 			BufferedImage image = camera.capture();
 			video.mkVideo(image);
-			
 			// This may be needed to controll the frame rate. 
-//			try {
-//				Thread.sleep(1);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				Thread.sleep(30);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		video.stop();
 		camera.cameraOff();
