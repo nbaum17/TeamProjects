@@ -18,10 +18,12 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
+import com.Utils;
 import com.control.video.SendVideo;
 import com.control.video.StartVideo;
 import com.control.video.StopVideo;
 import com.model.sendVideo.VideoData;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class VideoClientGui extends JPanel{
@@ -33,6 +35,8 @@ public class VideoClientGui extends JPanel{
 	private JButton btnStartRecording;
 	private JButton btnStopRecording;
 	private VideoData videoData; 
+	private JTextField host;
+	private JTextField port;
 	
 	/**
 	 * Create the panel.
@@ -70,53 +74,88 @@ public class VideoClientGui extends JPanel{
 		btnStopRecording.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnStopRecording.setEnabled(false);
 		
-		JProgressBar progressBar = new JProgressBar();
+		host = new JTextField();
+		host.setText(Utils.hostName);
+		host.setColumns(10);
+		
+		port = new JTextField();
+		port.setText(Utils.port);
+		port.setColumns(10);
+		
+		JLabel lblHost = new JLabel("Host");
+		lblHost.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JLabel lblPort = new JLabel("Port");
+		lblPort.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JSeparator separator_1 = new JSeparator();
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(progressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addComponent(btnStartRecording, GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnStopRecording, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-						.addComponent(separator, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-						.addComponent(lblTitle, Alignment.LEADING)
-						.addComponent(videoTitle, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-						.addComponent(lblTeamName, Alignment.LEADING)
-						.addComponent(teamName, GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-						.addComponent(lblSport, Alignment.LEADING)
-						.addComponent(sport, GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-						.addComponent(btnSendVideo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(separator_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+						.addComponent(btnSendVideo, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+						.addComponent(sport, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+						.addComponent(lblSport)
+						.addComponent(teamName, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+						.addComponent(lblTeamName)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(host, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+									.addGap(12))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblHost)
+									.addGap(192))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnStartRecording, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPort)
+								.addComponent(port, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnStopRecording, GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))))
+						.addComponent(videoTitle, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+						.addComponent(lblTitle)
+						.addComponent(separator, GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addContainerGap()
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblHost)
+						.addComponent(lblPort))
+					.addGap(5)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(port, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(host, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnStartRecording)
 						.addComponent(btnStopRecording))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblTitle)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(videoTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblTeamName)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(teamName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblSport)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(sport, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnSendVideo)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
@@ -150,6 +189,8 @@ public class VideoClientGui extends JPanel{
 				videoData.setTeamName(teamName.getText());
 				videoData.setTile(videoTitle.getText());
 				SendVideo send = new SendVideo(videoData);
+				Utils.hostName = host.getText();
+				Utils.port = port.getText();
 				send.execute();
 			}
 		});

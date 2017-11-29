@@ -24,12 +24,18 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.json.JSONArray;
 
+import com.controllers.video.AddVideo;
 import com.controllers.video.GetAllVideos;
+import com.controllers.video.SearchVideos;
 
 
 @Path("/video")
 public class VideoService {
 
+	/**
+	 * gets all the video data from the database.
+	 * @return
+	 */
 	@GET
 	@Path("/getAllVideos")
 	public String getAllVideos() {
@@ -44,6 +50,34 @@ public class VideoService {
 		return json.toString();
 	}
 	
+	/**
+	 * service that utilizes the search functionality. 
+	 * @param data
+	 * @return
+	 */
+	@GET
+	@Path("/search")
+	public String search(String data) {
+		SearchVideos sv = new SearchVideos(data);
+		JSONArray json;
+		try {
+			sv.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(sv.getVideoList().size() == 0) {
+			return "No Videos Found";
+		}
+		json = new JSONArray(sv.getVideoList().toArray());
+		return json.toString();
+	}
+	
+	/**
+	 * downloads the video from the server
+	 * @param name
+	 * @return
+	 */
 	@GET
 	@Path("/download/{name}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -54,40 +88,61 @@ public class VideoService {
 			      .build();
 	}
 	
+	/**
+	 * saves the video data to the database. 
+	 * @param data
+	 * @return
+	 */
 	@POST
-	@Path("/upload")
+	@Path("/uploadVideoData")
+	public Response fileData(String data) {
+		AddVideo av = new AddVideo(data);
+		try {
+			av.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
+		}
+		return Response.status(200).build();
+	}
+	
+	/**
+	 * saves video to the server file system 
+	 * @param input
+	 * @return response succeed or fail 
+	 */
+	@POST
+	@Path("/uploadVideo")
 	@Consumes("multipart/form-data")
 	public Response uploadFile(MultipartFormDataInput input) {
 		Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 		// Get file data to save
         List<InputPart> inputParts = uploadForm.get("attachment");
- 
         for (InputPart inputPart : inputParts) {
             try {
- 
                 MultivaluedMap<String, String> header = inputPart.getHeaders();
                 String fileName = getFileName(header);
-   
                 // convert the uploaded file to inputstream
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
- 
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 // constructs upload file path
                 fileName = "D:\\SERVER\\wildfly-9.0.0.Final\\standalone\\deployments\\videos\\" + fileName;
                 writeFile(bytes, fileName);
- 
-                  
                 return Response.status(200).entity("Uploaded file name : " + fileName)
                         .build();
- 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return null;
-		
+        return Response.status(500).entity("Failed to upload video").build();
 	}
-
+	
+	/**
+	 * helper for upload service.
+	 * @param content
+	 * @param fileName
+	 * @throws IOException
+	 */
 	private void writeFile(byte[] content, String fileName) throws IOException {
 		File file = new File(fileName);
         if (!file.exists()) {
@@ -100,6 +155,11 @@ public class VideoService {
         fop.close();
 	}
 
+	/**
+	 * gets the file name of the file being transfered. 
+	 * @param header
+	 * @return
+	 */
 	private String getFileName(MultivaluedMap<String, String> header) {
 		String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
 		 
@@ -115,6 +175,10 @@ public class VideoService {
         return "unknown";
 	}
 
+	/**
+	 * gets the path in case we need it.
+	 * @return
+	 */
 	@GET
 	@Path("/getpath")
 	public String getpath() {

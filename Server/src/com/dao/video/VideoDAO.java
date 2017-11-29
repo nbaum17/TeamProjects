@@ -1,6 +1,7 @@
 package com.dao.video;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,6 +33,26 @@ public class VideoDAO {
 		return videoList;
 	}
 	
+	/**
+	 * adds video data to the database.
+	 * @param con
+	 * @param videoD
+	 * @throws SQLException if the insert does not work. 
+	 */
+	public void addVideo(Connection con, Video videoD) throws SQLException {
+		String query = " insert into video_table (date, sport, team, title, file_location)"
+		        + " values (?, ?, ?, ?, ?)";
+	      // create the mysql insert preparedstatement
+	      PreparedStatement preparedStmt = con.prepareStatement(query);
+	      preparedStmt.setLong(1, videoD.getDate());
+	      preparedStmt.setString(2, videoD.getSport());
+	      preparedStmt.setString(3, videoD.getTeam());
+	      preparedStmt.setString(4, videoD.getTitle());
+	      preparedStmt.setString(5, videoD.getPath());
+	      // execute the preparedstatement
+	      preparedStmt.execute();
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////
 	//Add other methods for querying the database here.
 	////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +77,5 @@ public class VideoDAO {
 			videoList.add(video);
 		}
 		return videoList;
-	}
-	
-	
+	}	
 }

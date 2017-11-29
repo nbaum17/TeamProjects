@@ -1,13 +1,18 @@
 package com.model.captureVideo;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+
 import org.jcodec.api.awt.AWTSequenceEncoder;
+import org.jcodec.common.model.Picture;
 
 
 public class Video {
@@ -23,7 +28,10 @@ public class Video {
     private Video() {
     	date = new Date().getTime();
       try {
-            enc = AWTSequenceEncoder.create25Fps(new File("./video/"+ date +".mp4"));
+    	  
+    	  enc = AWTSequenceEncoder.create25Fps(new File("./video/"+ date +".mp4"));
+    	  
+            
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,7 +57,18 @@ public class Video {
      */
     public void mkVideo(BufferedImage image) {
     	try {
-            enc.encodeImage(image);
+    		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    		ImageIO.write(image, "jpg", baos );
+    		baos.flush();
+    		byte[] imageInByte = baos.toByteArray();
+    		baos.close();
+    		// if byte[] is to big.
+    		
+    		if(imageInByte.length < 15000) {
+    			enc.encodeImage(image);
+    		}else {
+    			System.out.println(imageInByte.length);
+    		}
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
         }
